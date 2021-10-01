@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<script>
+    'use strict';
+    function lottomake(){
+        //빈 배열 생성
+        let arr1 =[];
+        //i 값 생성
+        let i = 0;
+        //중복값인지 확인하는 boolean 값 생성
+        let checkb = true;
+        //textarea에 넣기 위해 폼 명 가져오기
+        let frm = document.lotterform;
+        //결과값
+        let resultText = '';
+        //arr1.length길이가 6이 되면 멈춤
+        while(arr1.length < 6){
+            //랜덤 함수 생성
+            let random =Math.random();
+            //45까지 중 한개 랜덤 수 생성
+            let num1 = Math.floor(random * 45) + 1;
+            //arr1 길이를 i에 대입
+            //i값은 다음 배열에 넣어주기 위한 값이다.
+            i = arr1.length;
+            //중복값 확인하는 값을 초기화
+            checkb = true;
+            //처음 시작시는 무조건 값 넣기
+            if(i == 0){
+                arr1[0] = num1;
+            }
+            //두번째 값이 이후부터는 초기값확인항 중복발생되지 않도록 확인
+            else{
+                //arr1.length 만큼 확인
+                for(var j =0; j <= arr1.length -1; j++)
+                {
+                    if(num1 == arr1[j]){
+                        checkb = false;
+                    }
+                }    
+                if(checkb){
+                    //중복이 아닌 값일 경우 배열이 넣어주기
+                    arr1[i]=num1
+                }
+            }    
+        }
+        //6개의 로또 번호 확인 후 최종 오름차순으로 변경
+        //arr1.sort();
+        arr1.sort((a, b) => a - b);
+        //6개의 로또 번호 출력
+        console.log(`최종 로또 번호는 : ${arr1}`);
+        console.log(`최종 로또 길이 : ${arr1.length}`);
+        
+        for(var j =0; j <= 5; j++){
+            if(j==0){
+                resultText = `${arr1[j]}`
+            }
+            else {
+                resultText = resultText + ',' + `${arr1[j]}`
+            }
+        }
+        document.getElementById("lottoresult").value = resultText;
+    }
+</script>
+</head>
+<body>
+    <H2>로또 번호 생성기</H2>
+    <form name="lotterform">
+        <p><input type="button" value ="로또 번호 생성" onclick="lottomake()"></p>
+        <p><textarea id ="lottoresult" cols="50" rows="10"></textarea></p>
+    </form>
+</body>
+</html>

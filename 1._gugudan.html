@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>구구단</title>
+<script>
+    'use strict';
+    var ClieckCount  = 0;  // 전역변수
+    function numbercheck(){
+        //구구단 폼 불러오기
+        let frm = document.gugudanform;
+        //랜덤 함수 실행
+        const randomnm = Math.random();
+        //1부터 6까지 랜덤 숫자 가져오기
+        let RanNm = Math.floor(randomnm * 6) + 1;
+        let resultText = '';
+        //카운트 늘리기
+        ClieckCount = ClieckCount + 1;
+
+        console.log(`버튼 클릭한 횟수는 : ${ClieckCount}`);
+        console.log(`랜덤 숫자는   : ${RanNm}`);
+        console.log(`입력한 숫자는 : ${frm.innum.value}`);
+        
+        //resultText = document.getElementById("inputmemo").value;
+        resultText = resultText + '\n' + `버튼 클릭한 횟수는 : ${ClieckCount}`;
+        resultText = resultText + '\n' + `입력한 숫자는: ${frm.innum.value}`;
+        resultText = resultText + '\n' + `랜덤  숫자는 : ${RanNm}`;
+
+        //textarea에 뿌려주기
+        //입력한 값과 랜덤 함수를 비교한다.
+        if(frm.innum.value == RanNm){
+            console.log(`입력한 숫자와 랜덤 숫자가 같습니다.`);
+            resultText = resultText + '\n' + `입력한 숫자와 랜덤 숫자가 같습니다.`;
+        } 
+        else {
+            console.log(`입력한 숫자와 랜덤 숫자가 다릅니다.`); 
+            resultText = resultText + '\n' + `입력한 숫자와 랜덤 숫자가 다릅니다.`;
+        }
+        resultText = resultText + '\n' +`----------------------------------`;
+        document.getElementById("inputmemo").value = resultText;
+        console.log(`----------------------------------`); 
+        //document.getElementById("inputmemo").value ='-----------------------------';
+        
+
+    }
+</script>
+</head>
+<body>
+    <h2>구구단</h2>
+    <form action="#" method="post" name="gugudanform">
+        <p>입력한 값(1~6) : <input type="text" name="innum" value="1"></p>
+        <p><input type="button" value="클릭" onclick="numbercheck()"></p>
+        <p>
+            <textarea id="inputmemo" cols="100" rows="10"></textarea>
+        </p>
+    </form>
+    
+</body>
+</html>
