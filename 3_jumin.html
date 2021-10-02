@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<script>
+    'use strict';
+    var checknum = [2,3,4,5,6,7,8,9,2,3,4,5];
+
+    function check1(){
+        //1. 각 항목 위치에 숫자 더하기-마지막숫자는 제외)
+        //2. 더한 각자리의 숫자를 모두 더함
+        //3. 11로 나눈 나머지 값 구하기
+        //4. 11에서 결과값을 뺌(2자리의 경우 10을 나눈 나머지 값을 구함)
+        //5. 마지막 번호와 동일한지 체크
+
+        //입력한 값 가져오기
+        let frm = document.myform;
+        let inputvalue = frm.inputstr1.value + frm.inputstr2.value; 
+        //숫자만 입력했는지 확인하기 위해 
+        let numinputvalue = Number(inputvalue);
+
+        //검사 결과 
+        let resultstr = '';
+
+        //주민번호 결과리스트에 입력
+        resultstr = `${frm.inputstr1.value} - ${frm.inputstr2.value} \n`;
+        
+        console.log(`------------------------`);
+        console.log(`주민번호 유효성 검사 시작`);
+
+        console.log(`주민번호가 13자리인지 확인`);
+        //입력된 숫자가 길이 체크
+        if(inputvalue.length 
+        !== 13 ){
+            console.log(`주민번호가 13자리가 아닙니다.`);
+            alert(`주민번호를 잘못 입력하셨습니다.`);
+            return;
+        }
+        console.log(`주민번호가 13자리인지 확인 완료`);
+
+
+        console.log(`입력한 값이 숫자만 입력했는지 확인`);
+        //입력된 값이 숫자인지 체크
+        if (inputvalue != numinputvalue){
+            console.log(`숫자외에 다른 값이 입력되었습니다.`);
+            alert(`주민번호를 잘못 입력하셨습니다.`);
+            return;
+        }
+        console.log(`입력한 값이 숫자만 입력했는지 확인 완료`);
+
+        //1번,2번 실행
+        let totalnum = sumjumin(inputvalue)
+        console.log(`주민번호 유효성 검사 1번, 2번 진행 : ${totalnum}`);
+        //3번 실행
+        let remainder = (totalnum % 11);
+        console.log(`주민번호 유효성 검사 3번 진행 : ${remainder}`);
+        //4번 실행
+        let lastnb  = 11 - remainder;
+        console.log(`주민번호 유효성 검사 4번 진행 : ${lastnb}`);
+
+        //만약 4번 실행 후 lastnb가 10보다 클 경우 10으로 나눈 나머지값
+        if(lastnb >= 10){
+            lastnb = (lastnb % 10);
+            console.log(`주민번호 유효성 검사 4번 추가 진행 : ${lastnb}`);
+        }
+
+        //5번 실행
+        if(lastnb == inputvalue[12]){
+            console.log(`정상적인 주민등록 번호입니다.`);
+            alert('정상적인 주민등록 번호입니다.');
+            resultstr = resultstr + `정상적인 주민등록 번호입니다.`;
+        } else {
+            console.log(`유효하지 않는 주민등록 번호입니다.`);
+            alert('유효하지 않는 주민등록 번호입니다');
+            resultstr = resultstr + `유효하지 않는 주문등록 번호입니다.`;
+        }
+        
+
+        //textarea에 결과 쓰기
+        document.getElementById("resultText").value = resultstr;
+
+    }
+
+    //각 항목에 곱하는 함수
+    function sumjumin(jumin){
+        let sumtotal = 0;
+        //마지막 값은 제외
+        for(var i =0; i <= jumin.length -2; i++){   
+            sumtotal = sumtotal + (Number(jumin[i]) * checknum[i]);
+        }
+        return sumtotal;
+    }
+
+    //text에 자동 값 입력하는 함수
+    function textsetting(){
+        document.getElementById("input1").value = '001011';
+        document.getElementById("input2").value = '3068518';
+    }
+
+</script>
+</head>
+<body>
+    <h2>주민번호 유효성 체크</h2>
+    <form name="myform">
+        <p><label>주민번호 : </label><input type="text" placeholder="주민번호 앞자리" name ="inputstr1" id ="input1" maxlength="6"> - 
+                                     <input type="text" placeholder="주민번호 뒷자리" name ="inputstr2" id ="input2" maxlength="7">
+        </p>
+        <P><input type="button" value="클릭" onclick="check1()">
+           <input type="button" value="설정" onclick="textsetting()"></P>
+        <p><textarea id="resultText" cols="30" rows="10"></textarea></p>
+</form>
+</body>
+</html>
